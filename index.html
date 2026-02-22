@@ -6,6 +6,7 @@ index.html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shota DevOps Journey</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -324,6 +325,15 @@ index.html
 
             // Initialize language switcher
             LanguageSwitcher.init();
+
+            // Integrate typing animation with language switcher
+            if (typeof TypingAnimation !== 'undefined') {
+                const originalSwitchLanguage = LanguageSwitcher.switchLanguage;
+                LanguageSwitcher.switchLanguage = function(lang) {
+                    originalSwitchLanguage.call(this, lang);
+                    TypingAnimation.setLanguage(lang);
+                };
+            }
         });
     </script>
 </head>
@@ -366,6 +376,11 @@ index.html
         <div class="container hero-content">
         <div class="content">
             <div class="greeting">
+                <div class="typing-container">
+                    <span class="terminal-prompt typing-prompt">></span>
+                    <span id="typing-animation" class="typing-text"></span>
+                    <span id="typing-cursor" class="typing-cursor">_</span>
+                </div>
                 <h1><span data-translate="hero.greeting">Hi, I'm Shota</span> <span class="wave">👋</span></h1>
             </div>
             <p class="subtitle"><span class="terminal-prompt">$</span> <span data-translate="hero.subtitle">Future DevOps Engineer</span></p>
