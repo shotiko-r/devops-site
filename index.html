@@ -8,7 +8,7 @@ index.html
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.querySelector('.hamburger');
@@ -47,6 +47,20 @@ index.html
             window.addEventListener('scroll', updateActiveLink);
             updateActiveLink();
 
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+            function handleNavbarScroll() {
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(15, 15, 15, 0.98)';
+                    navbar.style.boxShadow = '0 0 30px rgba(0, 255, 136, 0.3)';
+                } else {
+                    navbar.style.background = 'rgba(15, 15, 15, 0.95)';
+                    navbar.style.boxShadow = '0 0 20px rgba(0, 255, 136, 0.2)';
+                }
+            }
+            window.addEventListener('scroll', handleNavbarScroll);
+            handleNavbarScroll();
+
             // Scroll-triggered animations
             const animateElements = document.querySelectorAll('.animate-on-scroll');
             const observerOptions = {
@@ -76,6 +90,240 @@ index.html
                 };
                 console.log('Contact form submitted:', formData);
             });
+
+            // Matrix-style falling lines animation
+            const canvas = document.getElementById('matrixCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+                const matrixArray = matrix.split("");
+                const fontSize = 14;
+                const columns = canvas.width / fontSize;
+                const drops = [];
+
+                for (let x = 0; x < columns; x++) {
+                    drops[x] = 1;
+                }
+
+                function draw() {
+                    ctx.fillStyle = 'rgba(15, 15, 15, 0.05)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#00ff88';
+                    ctx.font = fontSize + 'px Fira Code';
+
+                    for (let i = 0; i < drops.length; i++) {
+                        const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
+                        drops[i]++;
+                    }
+                }
+
+                setInterval(draw, 35);
+
+                window.addEventListener('resize', function() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
+            }
+
+            // Language Switcher Module
+            const LanguageSwitcher = {
+                currentLang: 'en',
+                translations: {
+                    en: {
+                        nav: {
+                            home: 'Home',
+                            about: 'About',
+                            projects: 'Projects',
+                            contact: 'Contact'
+                        },
+                        hero: {
+                            greeting: "Hi, I'm Shota",
+                            subtitle: 'Future DevOps Engineer',
+                            description: 'Building the infrastructure that powers tomorrow\'s applications',
+                            terminal: {
+                                output: 'DevOps Engineer | Cloud Infrastructure | Automation'
+                            },
+                            button: 'Contact Me'
+                        },
+                        about: {
+                            title: 'About',
+                            text: 'I\'m passionate about DevOps, cloud infrastructure, and automation. Building reliable systems that scale.'
+                        },
+                        projects: {
+                            title: 'Projects',
+                            intro: 'Infrastructure as Code, CI/CD pipelines, container orchestration, and cloud deployments.',
+                            card1: {
+                                title: 'Container Orchestration',
+                                description: 'Docker and Kubernetes setup for scalable microservices deployment with automated health checks and rolling updates.',
+                                link: 'View Project →'
+                            },
+                            card2: {
+                                title: 'Cloud Infrastructure',
+                                description: 'Terraform and AWS infrastructure as code for provisioning VPCs, EC2 instances, and managed services.',
+                                link: 'View Project →'
+                            },
+                            card3: {
+                                title: 'CI/CD Pipeline',
+                                description: 'GitHub Actions and Jenkins pipelines for automated testing, building, and deployment workflows.',
+                                link: 'View Project →'
+                            }
+                        },
+                        contact: {
+                            title: 'Contact',
+                            intro: 'Get in touch — let\'s build something great together.',
+                            form: {
+                                name: 'Name',
+                                namePlaceholder: 'Your name',
+                                email: 'Email',
+                                emailPlaceholder: 'your@email.com',
+                                message: 'Message',
+                                messagePlaceholder: 'Your message...',
+                                submit: 'Send'
+                            }
+                        }
+                    },
+                    ge: {
+                        nav: {
+                            home: 'მთავარი',
+                            about: 'ჩემ შესახებ',
+                            projects: 'პროექტები',
+                            contact: 'კონტაქტი'
+                        },
+                        hero: {
+                            greeting: 'გამარჯობა, მე ვარ შოთა',
+                            subtitle: 'მომავალი DevOps ინჟინერი',
+                            description: 'ვქმნი ინფრასტრუქტურას, რომელიც აძლევს ძალას ხვალინდელ აპლიკაციებს',
+                            terminal: {
+                                output: 'DevOps ინჟინერი | ღრუბლოვანი ინფრასტრუქტურა | ავტომატიზაცია'
+                            },
+                            button: 'დაკავშირება'
+                        },
+                        about: {
+                            title: 'ჩემ შესახებ',
+                            text: 'მე ვარ გატაცებული DevOps-ით, ღრუბლოვანი ინფრასტრუქტურით და ავტომატიზაციით. ვქმნი საიმედო სისტემებს, რომლებიც მასშტაბირდება.'
+                        },
+                        projects: {
+                            title: 'პროექტები',
+                            intro: 'ინფრასტრუქტურა როგორც კოდი, CI/CD პაიპლაინები, კონტეინერების ორქესტრაცია და ღრუბლოვანი დეპლოიმენტები.',
+                            card1: {
+                                title: 'კონტეინერების ორქესტრაცია',
+                                description: 'Docker და Kubernetes კონფიგურაცია მასშტაბირებადი მიკროსერვისების დეპლოიმენტისთვის ავტომატიზირებული ჯანმრთელობის შემოწმებებით და rolling updates-ებით.',
+                                link: 'პროექტის ნახვა →'
+                            },
+                            card2: {
+                                title: 'ღრუბლოვანი ინფრასტრუქტურა',
+                                description: 'Terraform და AWS ინფრასტრუქტურა როგორც კოდი VPC-ების, EC2 ინსტანსების და მართული სერვისების მოსაწყობად.',
+                                link: 'პროექტის ნახვა →'
+                            },
+                            card3: {
+                                title: 'CI/CD პაიპლაინი',
+                                description: 'GitHub Actions და Jenkins პაიპლაინები ავტომატიზირებული ტესტირების, ბილდინგის და დეპლოიმენტის ვორკფლოუსებისთვის.',
+                                link: 'პროექტის ნახვა →'
+                            }
+                        },
+                        contact: {
+                            title: 'კონტაქტი',
+                            intro: 'დაგვიკავშირდით — ერთად შევქმნათ რაღაც შესანიშნავი.',
+                            form: {
+                                name: 'სახელი',
+                                namePlaceholder: 'თქვენი სახელი',
+                                email: 'ელფოსტა',
+                                emailPlaceholder: 'თქვენი@ელფოსტა.com',
+                                message: 'შეტყობინება',
+                                messagePlaceholder: 'თქვენი შეტყობინება...',
+                                submit: 'გაგზავნა'
+                            }
+                        }
+                    }
+                },
+
+                init: function() {
+                    // Load saved language or default to English
+                    this.currentLang = localStorage.getItem('language') || 'en';
+                    this.updateLanguageButtons();
+                    this.translatePage();
+                    this.bindEvents();
+                },
+
+                bindEvents: function() {
+                    const langButtons = document.querySelectorAll('.lang-btn');
+                    langButtons.forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const lang = e.target.getAttribute('data-lang');
+                            this.switchLanguage(lang);
+                        });
+                    });
+                },
+
+                switchLanguage: function(lang) {
+                    if (lang === this.currentLang) return;
+                    this.currentLang = lang;
+                    localStorage.setItem('language', lang);
+                    this.updateLanguageButtons();
+                    this.translatePage();
+                },
+
+                updateLanguageButtons: function() {
+                    const enBtn = document.getElementById('langEn');
+                    const geBtn = document.getElementById('langGe');
+                    
+                    if (this.currentLang === 'en') {
+                        enBtn.classList.add('active');
+                        geBtn.classList.remove('active');
+                    } else {
+                        geBtn.classList.add('active');
+                        enBtn.classList.remove('active');
+                    }
+                },
+
+                translatePage: function() {
+                    const elements = document.querySelectorAll('[data-translate]');
+                    elements.forEach(el => {
+                        const key = el.getAttribute('data-translate');
+                        const translation = this.getTranslation(key);
+                        if (translation) {
+                            el.textContent = translation;
+                        }
+                    });
+
+                    // Translate placeholders
+                    const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+                    placeholderElements.forEach(el => {
+                        const key = el.getAttribute('data-translate-placeholder');
+                        const translation = this.getTranslation(key);
+                        if (translation) {
+                            el.setAttribute('placeholder', translation);
+                        }
+                    });
+
+                    // Update HTML lang attribute
+                    document.documentElement.lang = this.currentLang;
+                },
+
+                getTranslation: function(key) {
+                    const keys = key.split('.');
+                    let translation = this.translations[this.currentLang];
+                    
+                    for (let k of keys) {
+                        if (translation && translation[k]) {
+                            translation = translation[k];
+                        } else {
+                            return null;
+                        }
+                    }
+                    return translation;
+                }
+            };
+
+            // Initialize language switcher
+            LanguageSwitcher.init();
         });
     </script>
 </head>
@@ -87,18 +335,23 @@ index.html
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#home" class="nav-link active" data-translate="nav.home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
+                    <a href="#about" class="nav-link" data-translate="nav.about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#projects" class="nav-link" data-translate="nav.projects">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#contact" class="nav-link" data-translate="nav.contact">Contact</a>
                 </li>
             </ul>
+            <div class="language-switcher">
+                <button class="lang-btn" data-lang="en" id="langEn">EN</button>
+                <span class="lang-separator">|</span>
+                <button class="lang-btn" data-lang="ge" id="langGe">GE</button>
+            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -113,10 +366,10 @@ index.html
         <div class="container hero-content">
         <div class="content">
             <div class="greeting">
-                <h1>Hi, I'm Shota <span class="wave">👋</span></h1>
+                <h1><span data-translate="hero.greeting">Hi, I'm Shota</span> <span class="wave">👋</span></h1>
             </div>
-            <p class="subtitle"><span class="terminal-prompt">$</span> Future DevOps Engineer</p>
-            <p class="description">Building the infrastructure that powers tomorrow's applications</p>
+            <p class="subtitle"><span class="terminal-prompt">$</span> <span data-translate="hero.subtitle">Future DevOps Engineer</span></p>
+            <p class="description" data-translate="hero.description">Building the infrastructure that powers tomorrow's applications</p>
             <div class="terminal-window">
                 <div class="terminal-header">
                     <span class="terminal-dot"></span>
@@ -129,7 +382,7 @@ index.html
                         <span class="terminal-prompt">$</span> 
                         <span class="terminal-command">whoami</span>
                     </div>
-                    <div class="terminal-line terminal-output">
+                    <div class="terminal-line terminal-output" data-translate="hero.terminal.output">
                         DevOps Engineer | Cloud Infrastructure | Automation
                     </div>
                     <div class="terminal-line">
@@ -139,7 +392,7 @@ index.html
                 </div>
             </div>
             <button class="cta-button">
-                <span>Contact Me</span>
+                <span data-translate="hero.button">Contact Me</span>
             </button>
         </div>
         </div>
@@ -147,24 +400,24 @@ index.html
 
     <section id="about" class="section">
         <div class="container animate-on-scroll">
-            <h2 class="section-title">About</h2>
-            <p class="section-text">I'm passionate about DevOps, cloud infrastructure, and automation. Building reliable systems that scale.</p>
+            <h2 class="section-title" data-translate="about.title">About</h2>
+            <p class="section-text" data-translate="about.text">I'm passionate about DevOps, cloud infrastructure, and automation. Building reliable systems that scale.</p>
         </div>
     </section>
 
     <section id="projects" class="section">
         <div class="container projects-container">
-            <h2 class="section-title animate-on-scroll">Projects</h2>
-            <p class="section-text projects-intro animate-on-scroll">Infrastructure as Code, CI/CD pipelines, container orchestration, and cloud deployments.</p>
+            <h2 class="section-title animate-on-scroll" data-translate="projects.title">Projects</h2>
+            <p class="section-text projects-intro animate-on-scroll" data-translate="projects.intro">Infrastructure as Code, CI/CD pipelines, container orchestration, and cloud deployments.</p>
             <div class="project-cards">
                 <article class="project-card animate-on-scroll">
                     <div class="project-card-image">
                         <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop" alt="Docker containers">
                     </div>
                     <div class="project-card-content">
-                        <h3 class="project-card-title">Container Orchestration</h3>
-                        <p class="project-card-description">Docker and Kubernetes setup for scalable microservices deployment with automated health checks and rolling updates.</p>
-                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                        <h3 class="project-card-title" data-translate="projects.card1.title">Container Orchestration</h3>
+                        <p class="project-card-description" data-translate="projects.card1.description">Docker and Kubernetes setup for scalable microservices deployment with automated health checks and rolling updates.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener" data-translate="projects.card1.link">View Project →</a>
                     </div>
                 </article>
                 <article class="project-card animate-on-scroll">
@@ -172,9 +425,9 @@ index.html
                         <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop" alt="Cloud infrastructure">
                     </div>
                     <div class="project-card-content">
-                        <h3 class="project-card-title">Cloud Infrastructure</h3>
-                        <p class="project-card-description">Terraform and AWS infrastructure as code for provisioning VPCs, EC2 instances, and managed services.</p>
-                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                        <h3 class="project-card-title" data-translate="projects.card2.title">Cloud Infrastructure</h3>
+                        <p class="project-card-description" data-translate="projects.card2.description">Terraform and AWS infrastructure as code for provisioning VPCs, EC2 instances, and managed services.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener" data-translate="projects.card2.link">View Project →</a>
                     </div>
                 </article>
                 <article class="project-card animate-on-scroll">
@@ -182,9 +435,9 @@ index.html
                         <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop" alt="CI/CD pipeline">
                     </div>
                     <div class="project-card-content">
-                        <h3 class="project-card-title">CI/CD Pipeline</h3>
-                        <p class="project-card-description">GitHub Actions and Jenkins pipelines for automated testing, building, and deployment workflows.</p>
-                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                        <h3 class="project-card-title" data-translate="projects.card3.title">CI/CD Pipeline</h3>
+                        <p class="project-card-description" data-translate="projects.card3.description">GitHub Actions and Jenkins pipelines for automated testing, building, and deployment workflows.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener" data-translate="projects.card3.link">View Project →</a>
                     </div>
                 </article>
             </div>
@@ -193,37 +446,30 @@ index.html
 
     <section id="contact" class="section">
         <div class="container contact-container">
-            <h2 class="section-title animate-on-scroll">Contact</h2>
-            <p class="section-text animate-on-scroll">Get in touch — let's build something great together.</p>
+            <h2 class="section-title animate-on-scroll" data-translate="contact.title">Contact</h2>
+            <p class="section-text animate-on-scroll" data-translate="contact.intro">Get in touch — let's build something great together.</p>
             <form class="contact-form animate-on-scroll" id="contactForm">
                 <div class="form-group">
-                    <label for="contactName">Name</label>
-                    <input type="text" id="contactName" name="name" required placeholder="Your name">
+                    <label for="contactName" data-translate="contact.form.name">Name</label>
+                    <input type="text" id="contactName" name="name" required data-translate-placeholder="contact.form.namePlaceholder" placeholder="Your name">
                 </div>
                 <div class="form-group">
-                    <label for="contactEmail">Email</label>
-                    <input type="email" id="contactEmail" name="email" required placeholder="your@email.com">
+                    <label for="contactEmail" data-translate="contact.form.email">Email</label>
+                    <input type="email" id="contactEmail" name="email" required data-translate-placeholder="contact.form.emailPlaceholder" placeholder="your@email.com">
                 </div>
                 <div class="form-group">
-                    <label for="contactMessage">Message</label>
-                    <textarea id="contactMessage" name="message" required placeholder="Your message..." rows="5"></textarea>
+                    <label for="contactMessage" data-translate="contact.form.message">Message</label>
+                    <textarea id="contactMessage" name="message" required data-translate-placeholder="contact.form.messagePlaceholder" placeholder="Your message..." rows="5"></textarea>
                 </div>
                 <button type="submit" class="cta-button">
-                    <span>Send</span>
+                    <span data-translate="contact.form.submit">Send</span>
                 </button>
             </form>
         </div>
     </section>
 
-        <div class="background-gradient"></div>
-        <div class="floating-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
+        <div class="matrix-background"></div>
+        <canvas id="matrixCanvas"></canvas>
     </main>
 </body>
 </html>
