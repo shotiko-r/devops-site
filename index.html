@@ -1,0 +1,229 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shota DevOps Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            // Mobile menu toggle
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Smooth scroll + close mobile menu + update active state
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Update active nav link on scroll
+            function updateActiveLink() {
+                const scrollY = window.scrollY;
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        navLinks[index].classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink();
+
+            // Scroll-triggered animations
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -80px 0px',
+                threshold: 0.1
+            };
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-visible');
+                    }
+                });
+            }, observerOptions);
+            animateElements.forEach(function(el) {
+                observer.observe(el);
+            });
+
+            // Contact form - capture input and log to console
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('contactName').value,
+                    email: document.getElementById('contactEmail').value,
+                    message: document.getElementById('contactMessage').value
+                };
+                console.log('Contact form submitted:', formData);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Shota<span class="logo-accent">DevOps</span></a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+    <main>
+    <section id="home" class="section hero-section">
+        <div class="hero-background" aria-hidden="true"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+        <div class="content">
+            <div class="greeting">
+                <h1>Hi, I'm Shota <span class="wave">👋</span></h1>
+            </div>
+            <p class="subtitle"><span class="terminal-prompt">$</span> Future DevOps Engineer</p>
+            <p class="description">Building the infrastructure that powers tomorrow's applications</p>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-dot"></span>
+                    <span class="terminal-title">shota@devops:~</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> 
+                        <span class="terminal-command">whoami</span>
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        DevOps Engineer | Cloud Infrastructure | Automation
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span> 
+                        <span class="terminal-cursor">_</span>
+                    </div>
+                </div>
+            </div>
+            <button class="cta-button">
+                <span>Contact Me</span>
+            </button>
+        </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container animate-on-scroll">
+            <h2 class="section-title">About</h2>
+            <p class="section-text">I'm passionate about DevOps, cloud infrastructure, and automation. Building reliable systems that scale.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container projects-container">
+            <h2 class="section-title animate-on-scroll">Projects</h2>
+            <p class="section-text projects-intro animate-on-scroll">Infrastructure as Code, CI/CD pipelines, container orchestration, and cloud deployments.</p>
+            <div class="project-cards">
+                <article class="project-card animate-on-scroll">
+                    <div class="project-card-image">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop" alt="Docker containers">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">Container Orchestration</h3>
+                        <p class="project-card-description">Docker and Kubernetes setup for scalable microservices deployment with automated health checks and rolling updates.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                    </div>
+                </article>
+                <article class="project-card animate-on-scroll">
+                    <div class="project-card-image">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=250&fit=crop" alt="Cloud infrastructure">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">Cloud Infrastructure</h3>
+                        <p class="project-card-description">Terraform and AWS infrastructure as code for provisioning VPCs, EC2 instances, and managed services.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                    </div>
+                </article>
+                <article class="project-card animate-on-scroll">
+                    <div class="project-card-image">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop" alt="CI/CD pipeline">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">CI/CD Pipeline</h3>
+                        <p class="project-card-description">GitHub Actions and Jenkins pipelines for automated testing, building, and deployment workflows.</p>
+                        <a href="https://github.com" class="project-card-link" target="_blank" rel="noopener">View Project →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container contact-container">
+            <h2 class="section-title animate-on-scroll">Contact</h2>
+            <p class="section-text animate-on-scroll">Get in touch — let's build something great together.</p>
+            <form class="contact-form animate-on-scroll" id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" required placeholder="Your message..." rows="5"></textarea>
+                </div>
+                <button type="submit" class="cta-button">
+                    <span>Send</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+        <div class="background-gradient"></div>
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </main>
+</body>
+</html>
