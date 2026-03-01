@@ -21,8 +21,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/shotiko-backend:latest ./backend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/shotik-backend:latest ./backend
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/shotiko-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/shotik-backend:latest
